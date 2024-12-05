@@ -54,7 +54,7 @@ class Vec3D:
         returns a single float value with the calculated result
         """
         
-        return self.x * other.x + self.y * other.y + self.z * other.z
+        return (self.x * other.x) + (self.y * other.y) + (self.z * other.z)
 
     def Cross(self, other):
         """Calculates the cross product of self and other

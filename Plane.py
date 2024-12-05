@@ -10,7 +10,11 @@ class Plane:
         colour is a Vec3D object representing the colour of the plane
         reflectivity is a float that determines the ratio of diffuse vs specular light reflected of the shape
         """
-
+        self.point = Vec3D(point.x, point.y, point.z)
+        self.normal = Vec3D(normal.x, normal.y, normal.z)
+        self.normal.Normalize()
+        self.colour = Vec3D(colour.x, colour.y, colour.z)
+        self.reflectivity = reflectivity
         pass
 
     def Trace(self, ray):
@@ -23,25 +27,41 @@ class Plane:
         The second is a float value representing the distance from the ray origin that the intersection occurs at (t in o + t*d)
         The third is a Vec3D object representing the normal at the intersected position (always the same for a plane)
         """
+        Hit = False
+        Distans = 0
+        normal = self.normal
 
-        return None
+        Denominator = self.normal.Dot(ray.Direction())
+        #Check if the ray is parallel to the plane
+        if abs(Denominator)<0.0001:
+            return Hit, Distans, normal
+        
+        RayIntersection = ((self.point - ray.Origin()).Dot(self.normal))/Denominator
+        #Check if the ray intersects the plane
+        if RayIntersection >= 0:
+            Hit = True
+            Distans = RayIntersection
+            return Hit, Distans, normal
+        #Cheks if the ray is negative
+        else:
+            return Hit, Distans, normal
 
     def Point(self):
         """Getter function for the point the plane contains"""
 
-        return None
+        return self.point
     
     def Normal(self):
         """Getter function for the normal of the plane"""
 
-        return None
+        return self.normal
 
     def Colour(self):
         """Getter function for the colour of the plane"""
 
-        return None
+        return self.colour
 
     def Reflectivity(self):
         """Getter function for the reflectivity of the plane"""
 
-        return None
+        return self.reflectivity
