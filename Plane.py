@@ -27,24 +27,24 @@ class Plane:
         The second is a float value representing the distance from the ray origin that the intersection occurs at (t in o + t*d)
         The third is a Vec3D object representing the normal at the intersected position (always the same for a plane)
         """
-        Hit = False
-        Distans = 0
+        hit = False
+        distance = 0
         normal = self.normal
 
-        Denominator = self.normal.Dot(ray.Direction())
+        denominator = self.normal.Dot(ray.Direction())
         #Check if the ray is parallel to the plane
-        if abs(Denominator)<0.0001:
-            return Hit, Distans, normal
+        if abs(denominator)<0.0001:
+            return hit, distance, normal
         
-        RayIntersection = ((self.point - ray.Origin()).Dot(self.normal))/Denominator
+        rayIntersection = ((self.point - ray.Origin()).Dot(self.normal))/denominator
         #Check if the ray intersects the plane
-        if RayIntersection >= 0:
-            Hit = True
-            Distans = RayIntersection
-            return Hit, Distans, normal
+        if rayIntersection >= 0:
+            hit = True
+            distance = rayIntersection
+            return hit, distance, normal
         #Cheks if the ray is negative
         else:
-            return Hit, Distans, normal
+            return hit, distance, normal
 
     def Point(self):
         """Getter function for the point the plane contains"""

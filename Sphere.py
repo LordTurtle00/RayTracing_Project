@@ -26,30 +26,30 @@ class Sphere:
         The second is a float value representing the distance from the ray origin that the intersection occurs at (t in o + t*d)
         The third is a Vec3D object representing the normal at the intersected position
         """
-        OriginToCenter = self.centerPoint - ray.origin # Calculates the direction of L
-        ClosestApproach = OriginToCenter.Dot(ray.direction) # Calculates the dot produkt S
-        OriginToCenterDot = OriginToCenter.Dot(OriginToCenter) # L squered
-        ClosestApproachSquared = ClosestApproach**2 # S squered
-        SphereDiamemter = self.radius**2
+        originToCenter = self.centerPoint - ray.origin # Calculates the direction of L
+        closestApproach = originToCenter.Dot(ray.direction) # Calculates the dot produkt S
+        originToCenterDot = originToCenter.Dot(originToCenter) # L squered
+        closestApproachSquared = closestApproach**2 # S squered
+        sphereDiamemter = self.radius**2
 
-        if ClosestApproach < 0 and OriginToCenterDot > SphereDiamemter: # Checks if the sphere is behinde the origin point
+        if closestApproach < 0 and originToCenterDot > sphereDiamemter: # Checks if the sphere is behinde the origin point
             return False, 0, Vec3D(0,0,0)
         
-        M = OriginToCenterDot - ClosestApproachSquared
-        if M > SphereDiamemter: # Checks if the ray is outside the sphere
+        m = originToCenterDot - closestApproachSquared
+        if m > sphereDiamemter: # Checks if the ray is outside the sphere
             return False, 0, Vec3D(0,0,0)
         
-        Q = math.sqrt(SphereDiamemter-M)
-        if OriginToCenterDot > SphereDiamemter:
-            t = ClosestApproach - Q
+        q = math.sqrt(sphereDiamemter-m)
+        if originToCenterDot > sphereDiamemter:
+            distance = closestApproach - q
         else:
-            t = ClosestApproach + Q
+            distance = closestApproach + q
         
-        Intersection = ray.origin + ray.direction * t
-        Normal = Intersection - self.centerPoint
-        Normal.Normalize() #Normalizes the normal value
+        intersection = ray.origin + ray.direction * distance
+        normal = intersection - self.centerPoint
+        normal.Normalize() #Normalizes the normal value
 
-        return True, t, Normal
+        return True, distance, normal
 
     def CenterPoint(self):
         """Getter function for the center point of the sphere"""
